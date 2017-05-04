@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import Resource from 'vue-resource'
 import router from './router'
-import GlobalCaller from '../global'
+import GlobalCaller from './global'
 import '../test/sim'
 
 Vue.use(Resource);
