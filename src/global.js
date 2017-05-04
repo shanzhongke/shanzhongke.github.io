@@ -37,7 +37,7 @@ let GlobalCaller = ((name, params, callback, urlPar, failFn) => {
 //remove: {method: 'DELETE'},
 //delete: {method: 'DELETE'}
 const URLS = {
-	getNodes: ['/getNodes{/ids}', 'get']
+	getNodes: ['/api/getNodes{/ids}', 'get']
 };
 
 export default GlobalCaller
