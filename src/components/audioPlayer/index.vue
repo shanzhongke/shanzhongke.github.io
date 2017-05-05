@@ -3,17 +3,18 @@
 </template>
 
 <script>
+	/*data曲目数据格式: [{name,singer,src}]*/
 	export default {
 		name: "audioPlayer",
 		props: {
 			data: { //曲目数据
 				type: Array,
-				default () {
+				default() {
 					return [];
 				}
 			}
 		},
-		data () {
+		data() {
 			return {
 				index: 0, //当前播放曲目序号
 				src: '', //曲目路径
@@ -22,18 +23,21 @@
 			}
 		},
 		methods: {
-			ended () {
+			ended() { //当前曲目播放结束
 				if(this.data.length) {
 					let index = this.index;
-					this.index = index === this.data.length - 1 ? 0 : index++;
-					this.src = './static/audio/' + this.data[index].src + '.mp3';
-					this.name = this.data[index].name;
-					this.singer = this.data[index].singer;
+					this.index = index === this.data.length - 1 ? 0 : ++index;
+					this.modifyAudio(this.index);
 				}
+			},
+			modifyAudio(index) {
+				this.src = './static/audio/' + this.data[index].src + '.mp3';
+				this.name = this.data[index].name;
+				this.singer = this.data[index].singer;
 			}
 		},
-		mounted () {
-			if(this.data.length) this.src = './static/audio/' + this.data[0].src + '.mp3';
+		mounted() {
+			if(this.data.length) this.modifyAudio(0);
 		}
 	}
 </script>

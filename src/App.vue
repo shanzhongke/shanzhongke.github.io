@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import audioList from '../static/const/audioList'
+	import audioList from './const/audioList'
 	import audioPlayer from './components/audioPlayer';
 
 	export default {
