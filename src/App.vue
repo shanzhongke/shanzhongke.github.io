@@ -2,7 +2,7 @@
 	<div id="app">
 		<button @click="click">全屏</button>
 		<router-view></router-view>
-		<audio-player :data="audioList"></audio-player>
+		<audio-player :data="audioList" :random="true"></audio-player>
 	</div>
 </template>
 

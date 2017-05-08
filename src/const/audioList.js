@@ -7,7 +7,15 @@ export default [{
 	singer: '袁中平',
 	src: 'canglangge'
 }, {
-	name: '楚歌',
+	name: '鬲溪梅令',
 	singer: '袁中平',
-	src: 'chuge'
+	src: 'geximeiling'
+}, {
+	name: '陽關唱別',
+	singer: '華夏古樂團',
+	src: 'yangguanchangbie'
+}, {
+	name: '漁翁調',
+	singer: '華夏古樂團',
+	src: 'yuwengdiao'
 }]

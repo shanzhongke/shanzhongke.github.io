@@ -71,7 +71,7 @@
 
 <style scoped>
 	.audio {
-		width: 160px;
+		width: 180px;
 		padding: 5px;
 		position: relative;
 		overflow: hidden;
