@@ -10,6 +10,7 @@
 </template>
 
 <script>
+	import '../../assets/css/iconfont.css';
 	/*data曲目数据格式: [{name,singer,src}]*/
 	export default {
 		name: "audioPlayer",

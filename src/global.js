@@ -4,7 +4,17 @@ import Resource from 'vue-resource'
 let GlobalCaller = ((name, params, callback, urlPar, failFn) => {
 	let request = URLS[name];
 	let urlPars = urlPar || {}; //url附带参数 如/getNode/{id} /getNode/3esd42
-	let resource = Vue.resource(request[0]);
+	let resource;
+	if(params && request[1] === 'get') {
+		let par = '?';
+		for(var key in params) {
+			par += key + '=' + params[key] + '&';
+		}
+		par = par.substring(0, par.length - 1);
+		resource = Vue.resource(request[0] + par);
+	} else {
+		resource = Vue.resource(request[0]);
+	}
 //	let httpBody = {
 //		url: request[0],
 //		method: request[1]
