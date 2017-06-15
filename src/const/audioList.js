@@ -11,7 +11,7 @@ export default [{
 	singer: '袁中平',
 	src: 'geximeiling'
 }, {
-	name: '陽關唱別',
+	name: '陽關唱别',
 	singer: '華夏古樂團',
 	src: 'yangguanchangbie'
 }, {

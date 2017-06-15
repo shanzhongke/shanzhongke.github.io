@@ -5,7 +5,9 @@
 		<i class="iconfont icon-play" v-if="status == 'pause'" @click="play"></i>
 		<i class="iconfont icon-pause" v-if="status == 'play'" @click="pause"></i>
 		<i class="iconfont icon-next" @click="next"></i>
-		<span>{{name}} - {{singer}}</span>
+		<div class="text" :title="name + '-' + singer">
+			<span>{{name}} - {{singer}}</span>
+		</div>
 	</div>
 </template>
 
@@ -73,7 +75,7 @@
 <style scoped>
 	.audio {
 		width: 180px;
-		padding: 5px;
+		padding: 3px 5px;
 		position: relative;
 		overflow: hidden;
 		border-radius: 8px;
@@ -83,8 +85,17 @@
 	}
 	
 	.iconfont {
-		margin-right: 5px;
+		margin-right: 7px;
 		font-size: 14px;
 		cursor: pointer;
+	}
+	
+	.text {
+		float: right;
+		width: 130px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
 	}
 </style>

@@ -5,16 +5,14 @@
 			<div class="content">
 				<div class="nav-left">
 					<a href="">
-						<h4>遊方居</h4>
+						<h4>游方居</h4>
 					</a>
 				</div>
 				<div class="nav-right">
 					<button class="nav-btn iconfont icon-menu" @click="menuActive = !menuActive"></button>
-					<ul class="menu" 
-						:class="{ active: menuActive, out: !menuActive}" 
-						@blur="menuActive">
+					<ul class="menu" :class="{ active: menuActive, out: !menuActive}" @blur="menuActive">
 						<li>
-							<a href="">雲遊</a>
+							<a href="">雲游</a>
 						</li>
 						<li>
 							<a href="">拳技</a>
@@ -31,7 +29,7 @@
 		</nav>
 		<header class="header" :style="headBg">
 			<div class="content">
-				<h1>遊方居</h1>
+				<h1>游方居</h1>
 			</div>
 		</header>
 		<div class="audio-container clearfix">
@@ -52,13 +50,16 @@
 			return {
 				audioList,
 				menuActive: false,
-				headBgUrl: 'hero_home.jpg'
+				headBgUrl: ['weishuifeixiong',
+					'wangchuantu1', 'wangchuantu2', 'wangchuantu3', 'wangchuantu4', 'wangchuantu5'
+				]
 			}
 		},
 		computed: {
 			headBg() {
+				let index = Math.floor(Math.random() * this.headBgUrl.length);
 				return {
-					'background-image': 'url(../static/img/' + this.headBgUrl + ')'
+					'background-image': 'url(../static/img/' + this.headBgUrl[index] + '.jpg)'
 				}
 			}
 		},
@@ -86,6 +87,18 @@
 </script>
 
 <style lang="less">
+	@font-face {
+		font-family: '明体';
+		src: url('../static/font/WenYue-GuDianMingChaoTi-NC-W5.otf')
+	}
+	
+	#app {
+		font-family: '明体';
+		h1 {
+			font-family: '明体';
+		}
+	}
+	
 	.navbar {
 		position: absolute;
 		top: 0;
@@ -95,7 +108,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 0 15px;
+			padding: 0 10px;
 		}
 		a {
 			display: block;
@@ -148,12 +161,15 @@
 		}
 	}
 	
-	.audio-container{
+	.audio-container {
 		padding-right: 10px;
 		margin-bottom: 10px;
 	}
 	
 	@media only screen and (max-width: 767px) {
+		.navbar .content {
+			padding: 0;
+		}
 		.nav-right {
 			.nav-btn {
 				display: block;
