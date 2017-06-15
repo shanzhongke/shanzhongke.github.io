@@ -33,7 +33,7 @@
 			</div>
 		</header>
 		<div class="audio-container clearfix">
-			<audio-player :data="audioList" :random="true" class="rf"></audio-player>
+			<audio-player :data="songList" :random="true" class="rf"></audio-player>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -50,16 +50,28 @@
 			return {
 				audioList,
 				menuActive: false,
-				headBgUrl: ['weishuifeixiong',
-					'wangchuantu1', 'wangchuantu2', 'wangchuantu3', 'wangchuantu4', 'wangchuantu5'
+				headBgUrl: [
+					'weishuifeixiong',
+					'wangchuantu1',
+					'wangchuantu2',
+					'wangchuantu3',
+					'wangchuantu4',
+					'wangchuantu5'
 				]
 			}
 		},
 		computed: {
+			songList() { //背景音乐路径处理
+				let list = this.audioList.map((el) => {
+					el.src = '/static/audio/' + el.src + '.mp3';
+					return el;
+				});
+				return list;
+			},
 			headBg() {
 				let index = Math.floor(Math.random() * this.headBgUrl.length);
 				return {
-					'background-image': 'url(../static/img/' + this.headBgUrl[index] + '.jpg)'
+					'background-image': 'url(/static/img/' + this.headBgUrl[index] + '.jpg)'
 				}
 			}
 		},

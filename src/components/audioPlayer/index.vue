@@ -58,7 +58,7 @@
 				this.modifyAudio(this.index);
 			},
 			modifyAudio(index) { //切换曲目
-				this.src = './static/audio/' + this.data[index].src + '.mp3';
+				this.src = this.data[index].src;
 				this.name = this.data[index].name;
 				this.singer = this.data[index].singer;
 				this.status = 'play';
