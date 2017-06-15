@@ -88,14 +88,14 @@
 
 <style lang="less">
 	@font-face {
-		font-family: '明体';
+		font-family: mingTi;
 		src: url('../static/font/WenYue-GuDianMingChaoTi-NC-W5.otf')
 	}
 	
 	#app {
-		font-family: '明体';
+		font-family: mingTi;
 		h1 {
-			font-family: '明体';
+			font-family: mingTi;
 		}
 	}
 	
