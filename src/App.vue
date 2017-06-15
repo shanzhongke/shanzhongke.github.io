@@ -89,7 +89,7 @@
 <style lang="less">
 	@font-face {
 		font-family: mingTi;
-		src: url('../static/font/WenYue-GuDianMingChaoTi-NC-W5.otf')
+		src: url('/static/fonts/WenYue-GuDianMingChaoTi-NC-W5.otf')
 	}
 	
 	#app {
