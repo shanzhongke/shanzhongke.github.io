@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" :class="{ active: loadComplete}">
 		<!--<button @click="click">全屏</button>-->
 		<nav class="navbar">
 			<div class="content">
@@ -29,13 +29,19 @@
 		</nav>
 		<header class="header" :style="headBg">
 			<div class="content">
-				<h1>游方居</h1>
+				<h1>
+					<span>游</span>
+					<span>方</span>
+					<span>居</span>
+				</h1>
 			</div>
 		</header>
 		<div class="audio-container clearfix">
 			<audio-player :data="songList" :random="true" class="rf"></audio-player>
 		</div>
-		<router-view></router-view>
+		<div class="container">
+			<router-view></router-view>
+		</div>
 	</div>
 </template>
 
@@ -50,6 +56,7 @@
 			return {
 				audioList,
 				menuActive: false,
+				loadComplete: false,
 				headBgUrl: [
 					'weishuifeixiong',
 					'wangchuantu1',
@@ -94,6 +101,12 @@
 		},
 		components: {
 			audioPlayer
+		},
+		mounted() {
+			let _this = this;
+			setTimeout(() => {
+				_this.loadComplete = true;
+			}, 1000);
 		}
 	}
 </script>
@@ -105,9 +118,24 @@
 	}
 	
 	#app {
+		line-height: 1.5;
 		font-family: mingTi;
 		h1 {
 			font-family: mingTi;
+		}
+		&.active {
+			.nav-left {
+				opacity: 1;
+				left: 0;
+			}
+			.nav-right {
+				opacity: 1;
+				top: 0;
+			}
+			.header h1 span {
+				opacity: 1;
+				transform: scale(1);
+			}
 		}
 	}
 	
@@ -118,7 +146,7 @@
 		right: 0;
 		.content {
 			display: flex;
-			align-items: center;
+			align-items: baseline;
 			justify-content: space-between;
 			padding: 0 10px;
 		}
@@ -129,13 +157,20 @@
 	}
 	
 	.nav-left {
+		left: -75px;
+		opacity: 0;
+		position: relative;
+		transition: left 1s, opacity 2s;
 		a {
 			padding: 10px;
 		}
 	}
 	
 	.nav-right {
+		top: -75px;
+		opacity: 0;
 		position: relative;
+		transition: top 1s, opacity 2s;
 		.nav-btn {
 			display: none;
 			outline: none;
@@ -169,6 +204,18 @@
 				line-height: 70px;
 				font-size: 50px;
 				color: #fff;
+				span {
+					display: block;
+					transform: scale(0);
+					opacity: 0;
+					transition: transform 1.2s .7s, opacity 2s .7s;
+					&:nth-of-type(2) {
+						transition-delay: 1.2s;
+					}
+					&:nth-of-type(3) {
+						transition-delay: 1.7s;
+					}
+				}
 			}
 		}
 	}
@@ -208,6 +255,9 @@
 					transform: scale(1);
 					a {
 						opacity: 1;
+						&:hover {
+							border-radius: 2px;
+						}
 					}
 				}
 				&.out {

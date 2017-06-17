@@ -1,18 +1,17 @@
 <template>
+	<div>123</div>
 </template>
 
 <script>
-
 	export default {
 		name: 'index',
-//		data: () => {
-//			return {
-//				audioList
-//			}
-//		},
+		//		data: () => {
+		//			return {
+		//				audioList
+		//			}
+		//		},
 		methods: {
-			click: () => {
-			}
+			click: () => {}
 		}
 	}
 </script>
