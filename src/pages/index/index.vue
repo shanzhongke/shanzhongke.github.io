@@ -1,21 +1,97 @@
 <template>
-	<div>123</div>
+	<div class="wrap">
+		<transition-group name="slide" class="preview-list" tag='div'>
+			<div class="preview-item" 
+				v-if="list.length" 
+				v-for="item in list"
+				:key="item.type + item.id"
+			>
+				<router-link :to="'/' + item.type + '/' + item.id">
+					<h3>{{item.title}}</h3>
+					<p class="post-describe">{{item.describe}}</p>
+				</router-link>
+				<p class="post-date">{{item.time}}</p>
+			</div>
+		</transition-group>
+		<h2 class="none" v-if="!list.length">無</h2>
+	</div>
 </template>
 
 <script>
 	export default {
 		name: 'index',
-		//		data: () => {
-		//			return {
-		//				audioList
-		//			}
-		//		},
-		methods: {
-			click: () => {}
+		data: () => {
+			return {
+				list: [],a:false
+			}
+		},
+		mounted() {
+			let _this = this;
+			GlobalCaller("getPreviewList", {}, data => {
+				_this.list = data.data;
+			});
 		}
 	}
 </script>
 
-<style>
-
+<style lang='less' scoped>
+	.preview-item {
+		position: relative;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #eee;
+		margin-bottom: 20px;
+		a {
+			display: block;
+			&:hover {
+				opacity: .6;
+			}
+		}
+		h3 {
+			margin-bottom: 8px;
+			color: #404040;
+		}
+		.post-describe {
+			text-indent: 26px;
+			font-size: 13px;
+			font-style: italic;
+			color: #a3a3a3;
+		}
+		.post-date {
+			margin-top: 8px;
+			color: gray;
+			font-size: 16px;
+			font-style: italic;
+		}
+	}
+	
+	.none {
+		margin-top: 50px;
+		text-align: center;
+	}
+	
+	.slide-enter{
+		right: 100%;
+		opacity: 0;
+	}
+	
+	.slide-enter-to{
+		right: 0;
+		opacity: 1;
+	}
+	
+	.slide-enter-active{
+		transition: all 2s 2s;
+		&:nth-of-type(2) {
+			transition-delay: 2.2s;
+		}
+		&:nth-of-type(3) {
+			transition-delay: 2.4s;
+		}
+		&:nth-of-type(4) {
+			transition-delay: 2.6s;
+		}
+		&:nth-of-type(5) {
+			transition-delay: 2.8s;
+		}
+	}
 </style>

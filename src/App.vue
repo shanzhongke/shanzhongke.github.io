@@ -4,9 +4,9 @@
 		<nav class="navbar">
 			<div class="content">
 				<div class="nav-left">
-					<a href="">
+					<router-link to="/">
 						<h4>游方居</h4>
-					</a>
+					</router-link>
 				</div>
 				<div class="nav-right">
 					<button class="nav-btn iconfont icon-menu" @click="menuActive = !menuActive"></button>
@@ -208,12 +208,12 @@
 					display: block;
 					transform: scale(0);
 					opacity: 0;
-					transition: transform 1.2s .7s, opacity 2s .7s;
+					transition: transform 1.2s .6s, opacity 2s .6s;
 					&:nth-of-type(2) {
-						transition-delay: 1.2s;
+						transition-delay: 1.1s;
 					}
 					&:nth-of-type(3) {
-						transition-delay: 1.7s;
+						transition-delay: 1.6s;
 					}
 				}
 			}
@@ -223,6 +223,31 @@
 	.audio-container {
 		padding-right: 10px;
 		margin-bottom: 10px;
+	}
+	
+	.container {
+		padding-right: 15px;
+		padding-left: 15px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	
+	@media (min-width: 768px) {
+		.container {
+			width: 750px;
+		}
+	}
+	
+	@media (min-width: 992px) {
+		.container {
+			width: 970px;
+		}
+	}
+	
+	@media (min-width: 1200px) {
+		.container {
+			width: 1170px;
+		}
 	}
 	
 	@media only screen and (max-width: 767px) {
