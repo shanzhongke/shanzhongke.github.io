@@ -9,8 +9,13 @@
 					</router-link>
 				</div>
 				<div class="nav-right">
-					<button class="nav-btn iconfont icon-menu" @click="menuActive = !menuActive"></button>
-					<ul class="menu" :class="{ active: menuActive, out: !menuActive}" @blur="menuActive">
+					<button id="nav-btn" class="nav-btn iconfont icon-menu" @click="menuToggle"></button>
+					<ul class="menu" 
+						tabindex="0"
+						ref="menu"
+						:class="{ active: menuActive, out: !menuActive}" 
+						@blur="menuBlur"
+					>
 						<li>
 							<a href="">雲游</a>
 						</li>
@@ -57,6 +62,7 @@
 				audioList,
 				menuActive: false,
 				loadComplete: false,
+				menuCancel: false, //標識小屏幕右上角導航菜單失焦事件是否發生
 				headBgUrl: [
 					'weishuifeixiong',
 					'wangchuantu1',
@@ -83,7 +89,21 @@
 			}
 		},
 		methods: {
-			click: () => {
+			menuBlur() {
+				this.menuActive = false;
+				this.menuCancel = true;
+				setTimeout(() => {
+					this.menuCancel = false;
+				}, 100);
+			},
+			menuToggle() {
+				if(this.menuCancel) this.menuCancel = false;
+				else {
+					this.menuActive = true;
+					this.$refs.menu.focus();
+				}
+			},
+			click() {
 				function launchFullscreen(element) {
 					if(element.requestFullscreen) {
 						element.requestFullscreen();
@@ -120,6 +140,10 @@
 	#app {
 		line-height: 1.5;
 		font-family: mingTi;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 		h1 {
 			font-family: mingTi;
 		}

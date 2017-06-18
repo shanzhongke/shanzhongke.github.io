@@ -31,6 +31,7 @@ thead, tbody, tfoot, th, td {
 ul, ol {
   list-style-type: none;
   list-style-image: none;
+  outline: none;
 }
 
 /* ==========================================================================
