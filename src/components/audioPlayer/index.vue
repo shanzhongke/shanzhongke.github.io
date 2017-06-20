@@ -74,14 +74,15 @@
 
 <style scoped>
 	.audio {
-		width: 180px;
+		display: flex;
+		align-items: center;
+		width: 190px;
 		padding: 3px 5px;
 		position: relative;
 		overflow: hidden;
 		border-radius: 8px;
 		box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
 		font-size: 13px;
-		/*font-family: SimSun,"宋体";*/
 	}
 	
 	.iconfont {

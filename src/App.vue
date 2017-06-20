@@ -1,5 +1,5 @@
 <template>
-	<div id="app" :class="{ active: loadComplete}">
+	<div id="app" :class="{ active: loadComplete}" @click="menuActive = false">
 		<!--<button @click="click">全屏</button>-->
 		<nav class="navbar">
 			<div class="content">
@@ -9,24 +9,23 @@
 					</router-link>
 				</div>
 				<div class="nav-right">
-					<button id="nav-btn" class="nav-btn iconfont icon-menu" @click="menuToggle"></button>
+					<button id="nav-btn" class="nav-btn iconfont icon-menu" @click.stop="menuActive = !menuActive"></button>
 					<ul class="menu" 
 						tabindex="0"
 						ref="menu"
 						:class="{ active: menuActive, out: !menuActive}" 
-						@blur="menuBlur"
 					>
 						<li>
-							<a href="">雲游</a>
+							<router-link to="/wander">雲游</router-link>
 						</li>
 						<li>
-							<a href="">拳技</a>
+							<router-link to="/">拳技</router-link>
 						</li>
 						<li>
 							<a href="">中醫</a>
 						</li>
 						<li>
-							<a href="">書單</a>
+							<router-link to="/">書單</router-link>
 						</li>
 					</ul>
 				</div>
@@ -45,7 +44,9 @@
 			<audio-player :data="songList" :random="true" class="rf"></audio-player>
 		</div>
 		<div class="container">
-			<router-view></router-view>
+			<transition name="switch">
+				<router-view></router-view>
+			</transition>
 		</div>
 	</div>
 </template>
@@ -89,20 +90,6 @@
 			}
 		},
 		methods: {
-			menuBlur() {
-				this.menuActive = false;
-				this.menuCancel = true;
-				setTimeout(() => {
-					this.menuCancel = false;
-				}, 100);
-			},
-			menuToggle() {
-				if(this.menuCancel) this.menuCancel = false;
-				else {
-					this.menuActive = true;
-					this.$refs.menu.focus();
-				}
-			},
 			click() {
 				function launchFullscreen(element) {
 					if(element.requestFullscreen) {
@@ -147,6 +134,10 @@
 		h1 {
 			font-family: mingTi;
 		}
+		.preview-item{
+			right: 100%;
+			opacity: 0;
+		}
 		&.active {
 			.nav-left {
 				opacity: 1;
@@ -159,6 +150,10 @@
 			.header h1 span {
 				opacity: 1;
 				transform: scale(1);
+			}
+			.preview-item{
+				right: 0;
+				opacity: 1;
 			}
 		}
 	}
@@ -254,6 +249,30 @@
 		padding-left: 15px;
 		margin-right: auto;
 		margin-left: auto;
+		/*overflow: hidden;*/
+		position: relative;
+		& > div {
+			position: absolute;
+			left: 15px;
+			right: 15px;
+		}
+	}
+	
+	.switch-enter {
+		transform: translateX(103%);
+	}
+	.switch-enter-to {
+		transform: translateX(0);
+	}
+	.switch-leave{
+		transform: translateX(0);
+	}
+	.switch-leave-active, 
+	.switch-enter-active {
+		transition: all 1s;
+	}
+	.switch-leave-to {
+		transform: translateX(-103%);
 	}
 	
 	@media (min-width: 768px) {

@@ -12,7 +12,7 @@ let interceptor = (() => {
 	Vue.http.interceptors.push(((request, next) => {
 		let params = request.body;
 		let res = {};
-		let fn = data.URL['^' + request.method + '|' + request.url];
+		let fn = data.URL['^' + request.method + '|' + request.url.split('?')[0]];
 		if(fn) res = fn(params);
 		else console.log('不存在该url或method: ' + '^' + request.method + '|' + request.url);
 

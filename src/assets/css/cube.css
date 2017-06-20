@@ -25,6 +25,9 @@ thead, tbody, tfoot, th, td {
   padding: 0;
 }
 
+div, ul{
+	box-sizing: border-box;
+}
 /**
 * 非大面积文字排版网站通常不需要列表项，如果需要可单独设置
 */
@@ -59,14 +62,8 @@ a:hover {
   outline: 0 none;
 }
 
-/**
-* 统一 Chrome 和 Safari 的焦点框样式
-* Chrome 中 thin 关键字放大页面后焦点框不会放大 http://jsbin.com/ehakom/1
-* Firefox 中 box-shadow 会导致焦点框位置偏移，需用「outline-offset」修正
-*
-*/
 a:focus {
-  outline: 1px dotted;
+  outline: none;
 }
 
 /* ==========================================================================

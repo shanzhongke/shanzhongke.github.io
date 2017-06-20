@@ -15,24 +15,6 @@ let GlobalCaller = ((name, params, callback, urlPar, failFn) => {
 	} else {
 		resource = Vue.resource(request[0]);
 	}
-//	let httpBody = {
-//		url: request[0],
-//		method: request[1]
-//	};
-//	//根据不同方法获取不同请求参数
-//	if(request[1] === 'get') Object.assign(httpBody, {
-//		params
-//	});
-//	else Object.assign(httpBody, {
-//		body: params
-//	});
-
-	//发送http请求
-//	Vue.http(httpBody).then(data => { //成功回调
-//		callback(data.body);
-//	}).catch(data => { //捕捉所有失败情况并处理
-//		console.log('fail callback:' + data.statusText)
-//	});
 	resource[request[1]](urlPars, params).then(response => {
 		callback(response.body);
 	}).catch(response => { //捕捉所有失败情况并处理
@@ -48,7 +30,14 @@ let GlobalCaller = ((name, params, callback, urlPar, failFn) => {
 //delete: {method: 'DELETE'}
 const URLS = {
 	getNodes: ['/api/getNodes{/ids}', 'get'],
-	getPreviewList: ['/api/getPreviewList', 'get']
+	getPreviewList: ['/api/getPreviewList', 'get'],
+	//获取指定數量的最新文章
+	//request:{num} 文章數量
+	//response:[{id,title,describe,time,type}]
+	getWanderList: ['/api/getWanderList', 'get'],
+	//获取所有雲游類文章 按時間排序
+	//request:{}
+	//response:[{id,title,describe,time}]
 };
 
 export default GlobalCaller

@@ -1,18 +1,14 @@
 <template>
 	<div class="wrap">
-		<transition-group name="slide" class="preview-list" tag='div'>
-			<div class="preview-item" 
-				v-if="list.length" 
-				v-for="item in list"
-				:key="item.type + item.id"
-			>
+		<div class="preview-list">
+			<div class="preview-item" v-if="list.length" v-for="item in list" :key="item.type + item.id">
 				<router-link :to="'/' + item.type + '/' + item.id">
 					<h3>{{item.title}}</h3>
 					<p class="post-describe">{{item.describe}}</p>
 				</router-link>
 				<p class="post-date">{{item.time}}</p>
 			</div>
-		</transition-group>
+		</div>
 		<h2 class="none" v-if="!list.length">無</h2>
 	</div>
 </template>
@@ -22,12 +18,14 @@
 		name: 'index',
 		data: () => {
 			return {
-				list: [],a:false
+				list: []
 			}
 		},
 		mounted() {
 			let _this = this;
-			GlobalCaller("getPreviewList", {}, data => {
+			GlobalCaller("getPreviewList", {
+				num: 5
+			}, data => {
 				_this.list = data.data;
 			});
 		}
@@ -62,6 +60,19 @@
 			font-size: 16px;
 			font-style: italic;
 		}
+		transition: all 2s;
+		&:nth-of-type(2) {
+			transition-delay: .2s;
+		}
+		&:nth-of-type(3) {
+			transition-delay: .4s;
+		}
+		&:nth-of-type(4) {
+			transition-delay: .6s;
+		}
+		&:nth-of-type(5) {
+			transition-delay: .8s;
+		}
 	}
 	
 	.none {
@@ -69,29 +80,29 @@
 		text-align: center;
 	}
 	
-	.slide-enter{
+	/*.slide-enter {
 		right: 100%;
 		opacity: 0;
-	}
+	}*/
 	
-	.slide-enter-to{
+	/*.slide-enter-to {
 		right: 0;
 		opacity: 1;
-	}
+	}*/
 	
-	.slide-enter-active{
-		transition: all 2s 2s;
+	/*.slide-enter-active {
+		transition: all 2s;
 		&:nth-of-type(2) {
-			transition-delay: 2.2s;
+			transition-delay: .2s;
 		}
 		&:nth-of-type(3) {
-			transition-delay: 2.4s;
+			transition-delay: .4s;
 		}
 		&:nth-of-type(4) {
-			transition-delay: 2.6s;
+			transition-delay: .6s;
 		}
 		&:nth-of-type(5) {
-			transition-delay: 2.8s;
+			transition-delay: .8s;
 		}
-	}
+	}*/
 </style>
