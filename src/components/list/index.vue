@@ -3,8 +3,8 @@
 		<ul>
 			<li class="list-item" v-for="item in data">
 				<router-link :to="'/' + item.type + '/' + item.id">
-					<p>{{item.title}}</p>
-					<p>{{item.time}}</p>
+					<p class="title">{{item.title}}</p>
+					<p class="time">{{item.time}}</p>
 				</router-link>
 			</li>
 		</ul>
@@ -37,5 +37,14 @@
 		padding-bottom: 5px;
 		border-bottom: 1px solid #eee;
 		margin-bottom: 10px;
+		.title {
+			color: #404040;
+		}
+		.time {
+			color: #aaa;
+		}
+		&:hover {
+			opacity: .7;
+		}
 	}
 </style>

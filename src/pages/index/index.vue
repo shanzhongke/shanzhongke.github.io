@@ -56,7 +56,7 @@
 		}
 		.post-date {
 			margin-top: 8px;
-			color: gray;
+			color: #aaa;
 			font-size: 16px;
 			font-style: italic;
 		}
@@ -79,30 +79,4 @@
 		margin-top: 50px;
 		text-align: center;
 	}
-	
-	/*.slide-enter {
-		right: 100%;
-		opacity: 0;
-	}*/
-	
-	/*.slide-enter-to {
-		right: 0;
-		opacity: 1;
-	}*/
-	
-	/*.slide-enter-active {
-		transition: all 2s;
-		&:nth-of-type(2) {
-			transition-delay: .2s;
-		}
-		&:nth-of-type(3) {
-			transition-delay: .4s;
-		}
-		&:nth-of-type(4) {
-			transition-delay: .6s;
-		}
-		&:nth-of-type(5) {
-			transition-delay: .8s;
-		}
-	}*/
 </style>

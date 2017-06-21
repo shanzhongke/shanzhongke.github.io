@@ -2,42 +2,49 @@
 	<div id="app" :class="{ active: loadComplete}" @click="menuActive = false">
 		<!--<button @click="click">全屏</button>-->
 		<nav class="navbar">
-			<div class="content">
-				<div class="nav-left">
-					<router-link to="/">
-						<h4>游方居</h4>
-					</router-link>
+			<transition name="nav" appear>
+				<div class="content">
+					<div class="nav-left">
+						<router-link to="/">
+							<h4>游方居</h4>
+						</router-link>
+					</div>
+					<div class="nav-right">
+						<button id="nav-btn" 
+							class="nav-btn iconfont icon-menu" 
+							@click.stop="menuActive = !menuActive">
+						</button>
+						<ul class="menu" 
+							tabindex="0"
+							ref="menu"
+							:class="{ active: menuActive, out: !menuActive}" 
+						>
+							<li>
+								<router-link to="/wander">雲游</router-link>
+							</li>
+							<li>
+								<router-link to="/">拳技</router-link>
+							</li>
+							<li>
+								<router-link to="/">中醫</router-link>
+							</li>
+							<li>
+								<router-link to="/">書單</router-link>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<div class="nav-right">
-					<button id="nav-btn" class="nav-btn iconfont icon-menu" @click.stop="menuActive = !menuActive"></button>
-					<ul class="menu" 
-						tabindex="0"
-						ref="menu"
-						:class="{ active: menuActive, out: !menuActive}" 
-					>
-						<li>
-							<router-link to="/wander">雲游</router-link>
-						</li>
-						<li>
-							<router-link to="/">拳技</router-link>
-						</li>
-						<li>
-							<a href="">中醫</a>
-						</li>
-						<li>
-							<router-link to="/">書單</router-link>
-						</li>
-					</ul>
-				</div>
-			</div>
+			</transition>
 		</nav>
 		<header class="header" :style="headBg">
 			<div class="content">
-				<h1>
-					<span>游</span>
-					<span>方</span>
-					<span>居</span>
-				</h1>
+				<transition-group tag="h1" name="header" mode="out-in"
+					appear
+					appear-class="header-appear"
+					appear-active-class="header-appear-active"
+				>
+					<span v-for="(item,index) in navName" :key="item + index">{{item}}</span>
+				</transition-group>
 			</div>
 		</header>
 		<div class="audio-container clearfix">
@@ -71,10 +78,19 @@
 					'wangchuantu3',
 					'wangchuantu4',
 					'wangchuantu5'
-				]
+				],
+				moduleName: {
+					index: ['游', '方', '居'],
+					wander: ['雲', '游'],
+					martial: ['拳', '技']
+				}
 			}
 		},
 		computed: {
+			navName() {
+				let name = this.$route.name;
+				return this.moduleName[name];
+			},
 			songList() { //背景音乐路径处理
 				let list = this.audioList.map((el) => {
 					el.src = '/static/audio/' + el.src + '.mp3';
@@ -139,18 +155,6 @@
 			opacity: 0;
 		}
 		&.active {
-			.nav-left {
-				opacity: 1;
-				left: 0;
-			}
-			.nav-right {
-				opacity: 1;
-				top: 0;
-			}
-			.header h1 span {
-				opacity: 1;
-				transform: scale(1);
-			}
 			.preview-item{
 				right: 0;
 				opacity: 1;
@@ -176,20 +180,17 @@
 	}
 	
 	.nav-left {
-		left: -75px;
-		opacity: 0;
 		position: relative;
-		transition: left 1s, opacity 2s;
 		a {
 			padding: 10px;
+		}
+		&:hover {
+			transform: scale(1.05);
 		}
 	}
 	
 	.nav-right {
-		top: -75px;
-		opacity: 0;
 		position: relative;
-		transition: top 1s, opacity 2s;
 		.nav-btn {
 			display: none;
 			outline: none;
@@ -210,33 +211,87 @@
 		}
 	}
 	
+	.nav-enter{
+		.nav-left {
+			left: -75px;
+			opacity: 0;
+		}
+		.nav-right {
+			top: -75px;
+			opacity: 0;
+		}
+	}
+	.nav-enter-active {
+		transition: left 1s;
+		.nav-left {
+			transition: left 1s, opacity 2s;
+		}
+		.nav-right {
+			transition: top 1s, opacity 2s;
+		}
+	}
+	.nav-enter-to {
+		.nav-left {
+			opacity: 1;
+			left: 0;
+		}
+		.nav-right {
+			opacity: 1;
+			top: 0;
+		}
+	}
+	
 	.header {
 		margin-bottom: 10px;
 		background: no-repeat center;
 		background-color: gray;
 		background-size: cover;
 		.content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 400px;
 			padding: 100px 15px 80px;
-			h1 {
-				margin: 0 auto;
-				width: 50px;
-				line-height: 70px;
+			h1 {position: relative;
+				height: 210px;
+				writing-mode: vertical-lr;
+				/*line-height: 70px;*/
 				font-size: 50px;
 				color: #fff;
 				span {
-					display: block;
-					transform: scale(0);
-					opacity: 0;
-					transition: transform 1.2s .6s, opacity 2s .6s;
-					&:nth-of-type(2) {
-						transition-delay: 1.1s;
-					}
-					&:nth-of-type(3) {
-						transition-delay: 1.6s;
-					}
+					display: inline-block;
+					margin: 10px 0;
 				}
 			}
 		}
+	}
+	
+	.header-appear {
+		opacity: 0;
+		transform: scale(0);
+	}
+	.header-appear-active {
+		transition: transform 1.2s .6s, opacity 2s .6s;
+		&:nth-of-type(2) {
+			transition-delay: 1.1s;
+		}
+		&:nth-of-type(3) {
+			transition-delay: 1.6s;
+		}
+	}
+	.header-enter{
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	.header-enter-active {
+		transition: transform 1.2s .3s, opacity 2s .3s;
+	}
+	.header-leave-active {
+		transition: all .3s;
+	}
+	.header-leave-to {
+		transform: translateX(-100%);
+		opacity: 0;
 	}
 	
 	.audio-container {
@@ -249,27 +304,25 @@
 		padding-left: 15px;
 		margin-right: auto;
 		margin-left: auto;
-		/*overflow: hidden;*/
+		overflow: hidden;
 		position: relative;
-		& > div {
-			position: absolute;
-			left: 15px;
-			right: 15px;
-		}
 	}
 	
 	.switch-enter {
 		transform: translateX(103%);
 	}
-	.switch-enter-to {
+	.switch-leave, .switch-enter-to {
 		transform: translateX(0);
 	}
-	.switch-leave{
-		transform: translateX(0);
+	.switch-enter-active{
+		position: absolute;
+		top: 0;
+		left: 15px;
+		right: 15px;
 	}
 	.switch-leave-active, 
 	.switch-enter-active {
-		transition: all 1s;
+		transition: all 1.3s;
 	}
 	.switch-leave-to {
 		transform: translateX(-103%);
@@ -340,11 +393,15 @@
 		}
 		.header {
 			.content {
+				height: 250px;
 				padding: 60px 15px 40px;
 				h1 {
-					width: 36px;
+					height: 150px;
 					font-size: 36px;
 					line-height: 50px;
+					span{
+						margin: 7px 0;
+					}
 				}
 			}
 		}
