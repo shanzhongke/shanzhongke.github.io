@@ -38,6 +38,10 @@ const URLS = {
 	//获取所有雲游類文章 按時間排序
 	//request:{}
 	//response:[{id,title,describe,time}]
+	getMartialList: ['/api/getMartialList', 'get'],
+	//获取所有雲游類文章 按時間排序
+	//request:{}
+	//response:[{id,title,describe,time}]
 };
 
 export default GlobalCaller

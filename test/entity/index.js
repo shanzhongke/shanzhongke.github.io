@@ -17,7 +17,16 @@ GO('/api/getPreviewList', function(params) {
 
 //获取所有雲游類文章 按時間排序
 GO('/api/getWanderList', function(params) {
-	var dataList = T.getAllByAttr('wanderArticles', []).concat();
+	return getList('wanderArticles');
+});
+
+//获取所有拳技類文章 按時間排序
+GO('/api/getMartialList', function(params) {
+	return getList('martialArticles');
+});
+
+function getList(type) {
+	var dataList = T.getAllByAttr(type, []).concat();
 	dataList.sort(function(a, b) {
 		return -(Date.parse(a.time) - Date.parse(b.time));
 	});
@@ -27,4 +36,4 @@ GO('/api/getWanderList', function(params) {
 		delete el.describe;
 		return el;
 	}));
-});
+}

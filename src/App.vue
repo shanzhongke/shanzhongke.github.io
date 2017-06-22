@@ -1,6 +1,7 @@
 <template>
 	<div id="app" :class="{ active: loadComplete}" @click="menuActive = false">
 		<!--<button @click="click">全屏</button>-->
+		<div class="loading" v-if="!loadComplete"></div>
 		<nav class="navbar">
 			<transition name="nav" appear>
 				<div class="content">
@@ -23,7 +24,7 @@
 								<router-link to="/wander">雲游</router-link>
 							</li>
 							<li>
-								<router-link to="/">拳技</router-link>
+								<router-link to="/martial">拳技</router-link>
 							</li>
 							<li>
 								<router-link to="/">中醫</router-link>
@@ -37,15 +38,28 @@
 			</transition>
 		</nav>
 		<header class="header" :style="headBg">
-			<div class="content">
-				<transition-group tag="h1" name="header" mode="out-in"
+			<!--<div class="content">-->
+				<!--<transition-group tag="h1" name="header" mode="out-in"
 					appear
 					appear-class="header-appear"
 					appear-active-class="header-appear-active"
 				>
 					<span v-for="(item,index) in navName" :key="item + index">{{item}}</span>
+				</transition-group>-->
+				<transition-group class="content" tag="div" name="header" appear
+					appear-class="header-appear"
+					>
+					<h1 v-for="(value, key) in moduleName" 
+						v-show="key === navName"
+						:key="key"
+					>
+						<span v-for="item in value">{{item}}</span>
+					</h1>
 				</transition-group>
-			</div>
+				<h1 ref="wisdom" :class="['wisdom', {active: wisdomStatus}]">
+					{{wisdomName}}
+				</h1>
+			<!--</div>-->
 		</header>
 		<div class="audio-container clearfix">
 			<audio-player :data="songList" :random="true" class="rf"></audio-player>
@@ -61,8 +75,9 @@
 <script>
 	import './assets/css/cube.css';
 	import audioList from './const/audioList'
+	import wisdoms from './const/wisdom'
 	import audioPlayer from './components/audioPlayer';
-
+	
 	export default {
 		name: 'app',
 		data() {
@@ -81,15 +96,23 @@
 				],
 				moduleName: {
 					index: ['游', '方', '居'],
-					wander: ['雲', '游'],
-					martial: ['拳', '技']
-				}
+					wander: ['雲', '游', '篇'],
+					martial: ['拳', '技', '篇']
+				},
+				wisdomStatus: false
 			}
 		},
 		computed: {
+			wisdomName() {
+				if(this.navName === 'index') return '';
+				let i = Math.floor(Math.random() * wisdoms[this.navName].length);
+				let name = wisdoms[this.navName][i];
+				return name;
+			},
 			navName() {
-				let name = this.$route.name;
-				return this.moduleName[name];
+				let name = this.$route.path.split('/')[1];
+				if(name === '') return 'index';
+				return name;
 			},
 			songList() { //背景音乐路径处理
 				let list = this.audioList.map((el) => {
@@ -103,6 +126,14 @@
 				return {
 					'background-image': 'url(/static/img/' + this.headBgUrl[index] + '.jpg)'
 				}
+			}
+		},
+		watch: {
+			navName(newVal) {
+				this.wisdomStatus = false;
+				setTimeout(() => {
+					this.wisdomStatus = true;
+				},200);
 			}
 		},
 		methods: {
@@ -127,9 +158,12 @@
 		},
 		mounted() {
 			let _this = this;
-			setTimeout(() => {
+			window.onload = (() => {
+				setTimeout(() => {
+					_this.wisdomStatus = true;
+				},200);
 				_this.loadComplete = true;
-			}, 1000);
+			});
 		}
 	}
 </script>
@@ -162,11 +196,22 @@
 		}
 	}
 	
+	.loading{
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+		background: #333 url(assets/img/bg.png) repeat;
+	}
+	
 	.navbar {
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
+	    z-index: 99;
 		.content {
 			display: flex;
 			align-items: baseline;
@@ -243,19 +288,19 @@
 	
 	.header {
 		margin-bottom: 10px;
+		position: relative;
 		background: no-repeat center;
 		background-color: gray;
 		background-size: cover;
 		.content {
+			position: relative;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			height: 400px;
 			padding: 100px 15px 80px;
-			h1 {position: relative;
-				height: 210px;
-				writing-mode: vertical-lr;
-				/*line-height: 70px;*/
+			h1 {
+				writing-mode: vertical-rl;
 				font-size: 50px;
 				color: #fff;
 				span {
@@ -264,33 +309,38 @@
 				}
 			}
 		}
+		.wisdom{
+			position: absolute;
+			opacity: 0;
+			left: 60px;
+			bottom: 20px;
+			max-height: 250px;
+			writing-mode: vertical-rl;
+		    letter-spacing: 2px;
+			color: #fff;
+			font-size: 16px;
+			&.active {
+				opacity: 1;
+				transition: opacity 1.3s .6s;
+			}
+		}
 	}
 	
 	.header-appear {
 		opacity: 0;
-		transform: scale(0);
-	}
-	.header-appear-active {
-		transition: transform 1.2s .6s, opacity 2s .6s;
-		&:nth-of-type(2) {
-			transition-delay: 1.1s;
-		}
-		&:nth-of-type(3) {
-			transition-delay: 1.6s;
-		}
 	}
 	.header-enter{
-		transform: translateX(100%);
+		transform: translateX(50%);
 		opacity: 0;
 	}
 	.header-enter-active {
-		transition: transform 1.2s .3s, opacity 2s .3s;
+		transition: transform 1s .3s, opacity 1.3s .3s;
 	}
 	.header-leave-active {
 		transition: all .3s;
 	}
 	.header-leave-to {
-		transform: translateX(-100%);
+		transform: translateX(-50%);
 		opacity: 0;
 	}
 	
@@ -396,7 +446,6 @@
 				height: 250px;
 				padding: 60px 15px 40px;
 				h1 {
-					height: 150px;
 					font-size: 36px;
 					line-height: 50px;
 					span{
@@ -404,6 +453,16 @@
 					}
 				}
 			}
+			.wisdom {
+				left: 25px;
+				bottom: 10px;
+				height: 170px;
+				font-size: 14px;
+			}
 		}
+	}
+	
+	::-webkit-scrollbar{
+		width: 0px;
 	}
 </style>
