@@ -15,14 +15,26 @@ GO('/api/getPreviewList', function(params) {
 	}));
 });
 
-//获取所有雲游類文章 按時間排序
+//获取雲游類文章列表 按時間排序
 GO('/api/getWanderList', function(params) {
 	return getList('wanderArticles');
 });
 
-//获取所有拳技類文章 按時間排序
+
+//获取拳技類文章列表 按時間排序
 GO('/api/getMartialList', function(params) {
 	return getList('martialArticles');
+});
+
+//获取指定文章具體内容
+GO('/api/getArticle', function(params) {
+	var type = params.type;
+	var id = params.id;
+	var data =T.getByAttr(type + 'Articles', {
+		type: type,
+		id: id
+	});
+	return data;
 });
 
 function getList(type) {

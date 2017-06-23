@@ -38,10 +38,8 @@ export default {
         c : for (var id in data) {
             var obj = data[id];
             if (attrs)
-                for (var i = 0; i < attrs.length; i++) {
-                    var key = attrs[i][0],
-                        value = attrs[i][1];
-                    if (obj[key] != value) continue c
+                for (var key in attrs) {
+                    if (obj[key] != attrs[key]) continue c
                 }
             if (filter && !filter.call(obj)) continue c;
             return obj;

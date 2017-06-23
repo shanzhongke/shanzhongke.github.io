@@ -29,19 +29,20 @@ let GlobalCaller = ((name, params, callback, urlPar, failFn) => {
 //remove: {method: 'DELETE'},
 //delete: {method: 'DELETE'}
 const URLS = {
-	getNodes: ['/api/getNodes{/ids}', 'get'],
 	getPreviewList: ['/api/getPreviewList', 'get'],
 	//获取指定數量的最新文章
 	//request:{num} 文章數量
 	//response:[{id,title,describe,time,type}]
 	getWanderList: ['/api/getWanderList', 'get'],
-	//获取所有雲游類文章 按時間排序
+	//获取雲游類文章列表 按時間排序
 	//request:{}
 	//response:[{id,title,describe,time}]
 	getMartialList: ['/api/getMartialList', 'get'],
-	//获取所有雲游類文章 按時間排序
+	//获取拳技類文章列表 按時間排序
 	//request:{}
 	//response:[{id,title,describe,time}]
+	getArticle: ['/api/getArticle', 'get'],
+	//获取指定文章具體内容
 };
 
 export default GlobalCaller

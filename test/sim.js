@@ -2,7 +2,6 @@
 
 import Vue from 'vue'
 import Resource from 'vue-resource'
-import './entity/text'
 import './entity/index'
 import data from './data'
 

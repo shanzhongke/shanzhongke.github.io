@@ -203,7 +203,7 @@
 		left: 0;
 		right: 0;
 		z-index: 999;
-		background: #333 url(assets/img/bg.png) repeat;
+		background: #ecdec5 url(assets/img/bg.png) repeat;
 	}
 	
 	.navbar {
@@ -312,8 +312,8 @@
 		.wisdom{
 			position: absolute;
 			opacity: 0;
-			left: 60px;
-			bottom: 20px;
+			left: 70px;
+			bottom: 30px;
 			max-height: 250px;
 			writing-mode: vertical-rl;
 		    letter-spacing: 2px;
