@@ -1,6 +1,6 @@
 <template>
 	<div class="audio">
-		<audio ref="player" :src="src" @ended="ended" preload="auto" autoplay>
+		<audio ref="player" :src="src" @ended="ended" preload="auto" :autoplay="auto">
 		</audio>
 		<i class="iconfont icon-play" v-if="status == 'pause'" @click="play"></i>
 		<i class="iconfont icon-pause" v-if="status == 'play'" @click="pause"></i>
@@ -21,6 +21,10 @@
 				type: Boolean,
 				default: false
 			},
+			autoplay: { //音频在就绪后是否马上播放
+				type: Boolean,
+				default: false
+			},
 			data: { //曲目数据
 				type: Array,
 				default() {
@@ -34,7 +38,8 @@
 				index: 0, //当前播放曲目序号
 				src: '', //曲目路径
 				name: '', //曲目名
-				singer: '' //演唱者
+				singer: '', //演唱者
+				auto: false //音频在就绪后是否马上播放
 			}
 		},
 		methods: {
@@ -48,26 +53,29 @@
 			},
 			next() { //下一首
 				if(!this.data.length) return;
-				let index = this.index === this.data.length - 1 ? 0 : ++this.index;
-				this.modifyAudio(index);
+				let index = this.index === this.data.length - 1 ? 0 : this.index + 1;
+				this.index = index;
+				this.modifyAudio(index, true);
 			},
 			ended() { //当前曲目播放结束
 				if(!this.data.length) return;
 				let index = this.index;
 				this.index = index === this.data.length - 1 ? 0 : ++index;
-				this.modifyAudio(this.index);
+				this.modifyAudio(this.index, true);
 			},
-			modifyAudio(index) { //切换曲目
+			modifyAudio(index, autoplay) { //切换曲目
 				this.src = this.data[index].src;
 				this.name = this.data[index].name;
 				this.singer = this.data[index].singer;
 				this.status = 'play';
+				this.auto = autoplay;
 			}
 		},
 		mounted() {
 			if(!this.data.length) return;
+			this.auto = this.autoplay;
 			this.index = this.random ? Math.floor(Math.random() * this.data.length) : 0;
-			this.modifyAudio(this.index);
+			this.modifyAudio(this.index, false);
 		}
 	}
 </script>

@@ -9,10 +9,7 @@ GO('/api/getPreviewList', function(params) {
 		return -(Date.parse(a.time) - Date.parse(b.time));
 	});
 	
-	return T.fr(dataList.slice(0, params.num).map(function(el) {
-		delete el.content;
-		return el;
-	}));
+	return T.fr(dataList.slice(0, params.num));
 });
 
 //获取雲游類文章列表 按時間排序
@@ -30,10 +27,12 @@ GO('/api/getMartialList', function(params) {
 GO('/api/getArticle', function(params) {
 	var type = params.type;
 	var id = params.id;
-	var data =T.getByAttr(type + 'Articles', {
+	var data = T.getByAttr(type + 'Articles', {
 		type: type,
 		id: id
 	});
+	var content = require('./' + type + '/' + data.title + '.md');
+	data.content = content;
 	return data;
 });
 
@@ -44,7 +43,6 @@ function getList(type) {
 	});
 	
 	return T.fr(dataList.map(function(el) {
-		delete el.content;
 		delete el.describe;
 		return el;
 	}));

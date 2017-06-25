@@ -43,6 +43,8 @@ const URLS = {
 	//response:[{id,title,describe,time}]
 	getArticle: ['/api/getArticle', 'get'],
 	//获取指定文章具體内容
+	//request:{id,type}
+	//response:[{id,title,content,describe,time}]
 };
 
 export default GlobalCaller

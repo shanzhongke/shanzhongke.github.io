@@ -1,7 +1,9 @@
 <template>
 	<div id="app" :class="{ active: loadComplete}" @click="menuActive = false">
 		<!--<button @click="click">全屏</button>-->
-		<div class="loading" v-if="!loadComplete"></div>
+		<div class="loading" v-if="!loadComplete">
+			<div class="loading-logo"></div>
+		</div>
 		<nav class="navbar">
 			<transition name="nav" appear>
 				<div class="content">
@@ -62,7 +64,7 @@
 			<!--</div>-->
 		</header>
 		<div class="audio-container clearfix">
-			<audio-player :data="songList" :random="true" class="rf"></audio-player>
+			<audio-player ref="audio" :data="songList" :random="true" class="rf"></audio-player>
 		</div>
 		<div class="container">
 			<transition name="switch">
@@ -86,7 +88,7 @@
 				menuActive: false,
 				loadComplete: false,
 				menuCancel: false, //標識小屏幕右上角導航菜單失焦事件是否發生
-				headBgUrl: [
+				headBgUrl: [ //头部背景图片路径
 					'weishuifeixiong',
 					'wangchuantu1',
 					'wangchuantu2',
@@ -163,6 +165,7 @@
 					_this.wisdomStatus = true;
 				},200);
 				_this.loadComplete = true;
+				_this.$refs.audio.$refs.player.play();
 			});
 		}
 	}
@@ -197,13 +200,23 @@
 	}
 	
 	.loading{
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		position: fixed;
 		top: 0;
 		bottom: 0;
 		left: 0;
 		right: 0;
 		z-index: 999;
-		background: #ecdec5 url(assets/img/bg.png) repeat;
+		background: #ecdec5  repeat;
+	}
+	
+	.loading-logo{
+		width: 200px;
+		height: 200px;
+		background-color: #000;
+		border-radius: 50%;
 	}
 	
 	.navbar {
@@ -321,13 +334,17 @@
 			font-size: 16px;
 			&.active {
 				opacity: 1;
-				transition: opacity 1.3s .6s;
+				transition: opacity 2s 1s;
 			}
 		}
 	}
 	
 	.header-appear {
 		opacity: 0;
+		span{
+			opacity: 0;
+			transform: translateY(100%);
+		}
 	}
 	.header-enter{
 		transform: translateX(50%);
@@ -335,6 +352,15 @@
 	}
 	.header-enter-active {
 		transition: transform 1s .3s, opacity 1.3s .3s;
+		span{
+			transition: transform 1s .3s, opacity 1.3s .3s;
+			&:nth-of-type(2) {
+				transition-delay: .5s;
+			}
+			&:nth-of-type(3) {
+				transition-delay: .7s;
+			}
+		}
 	}
 	.header-leave-active {
 		transition: all .3s;
@@ -354,7 +380,6 @@
 		padding-left: 15px;
 		margin-right: auto;
 		margin-left: auto;
-		overflow: hidden;
 		position: relative;
 	}
 	
