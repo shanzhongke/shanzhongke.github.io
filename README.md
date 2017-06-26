@@ -1,21 +1,34 @@
-# my-project1
+# 游方居
 
-> A Vue.js project
+> 個人生活博客 閑暇愛好 集腋成裘 皆記於此
 
-## Build Setup
+## 項目説明
+
+項目由vue-cli搭建，是一個基於vue2.0的單頁應用，頁面比較簡單，分爲首頁，列表頁及文章頁三種，目前項目由於運行於github Page上，因此讀取的都爲本地數據，但是使用的是基於之前公司代碼修改的模擬接口（攔截請求並模擬數據返回），因此可以在真實接口與模擬接口之間方便切換,另外項目沒有對低版本IE做兼容處理
+
+## 技術架構
+
+1. vue2.0
+2. vue-router (路由系統)
+3. vue-resource (數據請求處理)
+4. iconfont (矢量圖標)
+
+## 目前問題
+
+每次音頻播放切換后都會重新請求音頻數據，流量消耗對於移動端較多，目前在純前端方面還未找到緩存音頻的方法
+
+## 項目結構
 
 ``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+|-build  				//webpack配置
+|-config
+|-src  					//开发目录
+|----App.vue  			//首頁及组件挂载
+|----main.js  			//初始化配置
+|----pages  		    //各個頁面模塊
+|----router  		    //路由配置
+|----assets  			//资源
+|----const  			//一些固定性文字
+|----components  		//组件
+|-static
+|-test					//模擬接口
