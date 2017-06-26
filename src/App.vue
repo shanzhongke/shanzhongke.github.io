@@ -1,12 +1,26 @@
 <template>
 	<div id="app" :class="{ active: loadComplete}" @click="menuActive = false">
 		<!--<button @click="click">全屏</button>-->
-		<div class="loading" v-if="!loadComplete">
-			<div class="loading-logo"></div>
-		</div>
+		<transition name="load">
+			<div class="loading" v-if="!loadComplete">
+				<div class="loading-logo">
+					<div class="row">
+						<div class="logo"></div>
+					</div>
+					<div class="row">
+						<div class="logo"></div>
+						<div class="circle"></div>
+						<div class="logo"></div>
+					</div>
+					<div class="row">
+						<div class="logo"></div>
+					</div>
+				</div>
+			</div>
+		</transition>
 		<nav class="navbar">
 			<transition name="nav" appear>
-				<div class="content">
+				<div class="content" v-if="loadComplete">
 					<div class="nav-left">
 						<router-link to="/">
 							<h4>游方居</h4>
@@ -40,36 +54,53 @@
 			</transition>
 		</nav>
 		<header class="header" :style="headBg">
-			<!--<div class="content">-->
-				<!--<transition-group tag="h1" name="header" mode="out-in"
-					appear
-					appear-class="header-appear"
-					appear-active-class="header-appear-active"
+			<transition-group class="content" tag="div" name="header" appear 
+				appear-class="header-appear"
 				>
-					<span v-for="(item,index) in navName" :key="item + index">{{item}}</span>
-				</transition-group>-->
-				<transition-group class="content" tag="div" name="header" appear
-					appear-class="header-appear"
-					>
-					<h1 v-for="(value, key) in moduleName" 
-						v-show="key === navName"
-						:key="key"
-					>
-						<span v-for="item in value">{{item}}</span>
-					</h1>
-				</transition-group>
-				<h1 ref="wisdom" :class="['wisdom', {active: wisdomStatus}]">
-					{{wisdomName}}
+				<h1 v-for="(value, key) in moduleName" 
+					v-show="key === navName"
+					:key="key"
+				>
+					<span v-for="item in value">{{item}}</span>
 				</h1>
-			<!--</div>-->
+			</transition-group>
+			<h1 ref="wisdom" :class="['wisdom', {active: wisdomStatus}]">
+				{{wisdomName}}
+			</h1>
 		</header>
 		<div class="audio-container clearfix">
 			<audio-player ref="audio" :data="songList" :random="true" class="rf"></audio-player>
 		</div>
 		<div class="container">
-			<transition name="switch">
+			<transition name="switch" 
+				v-on:before-leave="pageSwitch = true;"
+				v-on:after-enter="pageSwitch = false;"
+			>
 				<router-view></router-view>
 			</transition>
+			<footer :class="{out: pageSwitch}">
+				<div class="links">
+					<h5>推薦站點</h5>
+					<ul>
+						<li><a href="https://shuge.org/" target="_blank">書格</a></li>
+						<li><a href="http://www.icourse163.org/" target="_blank">中國大學(慕課)</a></li>
+						<li><a href="http://zh.daoinfo.org/" target="_blank">道教百科</a></li>
+						<li><a href="http://www.qiuchuji.org/" target="_blank">邱祖百科</a></li>
+					</ul>
+				</div>
+				<div class="copy">
+					<p>
+                    	Copyright © 游方 2017 <br />
+                    	Email: fengshicanxue@hotmail.com | 
+                    	<iframe
+                    		v-if="loadComplete"
+						    style="margin-left: 2px; margin-bottom:-5px;"
+						    frameborder="0" scrolling="0" width="91px" height="20px"
+						    src="https://ghbtns.com/github-btn.html?user=shanzhongke&repo=toby20130333.github.io&type=star&count=true" >
+						</iframe>
+					</p>
+				</div>
+			</footer>
 		</div>
 	</div>
 </template>
@@ -101,7 +132,8 @@
 					wander: ['雲', '游', '篇'],
 					martial: ['拳', '技', '篇']
 				},
-				wisdomStatus: false
+				wisdomStatus: false,
+				pageSwitch: false //页面是否切换
 			}
 		},
 		computed: {
@@ -163,7 +195,7 @@
 			window.onload = (() => {
 				setTimeout(() => {
 					_this.wisdomStatus = true;
-				},200);
+				}, 200);
 				_this.loadComplete = true;
 				_this.$refs.audio.$refs.player.play();
 			});
@@ -209,14 +241,60 @@
 		left: 0;
 		right: 0;
 		z-index: 999;
-		background: #ecdec5  repeat;
+		background: #ecdec5 repeat;
 	}
 	
 	.loading-logo{
-		width: 200px;
-		height: 200px;
-		background-color: #000;
-		border-radius: 50%;
+		width: 300px;
+		height: 300px;
+		.row {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.row:nth-of-type(2) {
+		  	justify-content: space-between;
+		}
+		.circle{animation: loading 2s linear infinite;
+			width: 60px;
+			height: 60px;
+			background: url(assets/img/loading.png) center no-repeat;
+			background-size: 100%;
+		}
+		.logo {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			background: url(./assets/img/xuanwu.png) center no-repeat;
+			background-size: cover;
+			/*animation: loading 4s linear infinite;*/
+		}
+		.row:nth-of-type(2) .logo {
+			background-image: url(./assets/img/baihu.png);
+			&:nth-child(3) {
+				background-image: url(./assets/img/qinglong.png);
+			}
+		}
+		.row:nth-of-type(3) .logo{
+			background-image: url(./assets/img/zhuque.png);
+		}
+	}
+	
+	@keyframes loading{
+		from{
+			transform: rotate(0);
+		}
+		to{
+			transform: rotate(360deg);
+		}
+	}
+	
+	.load-leave-to {
+		opacity: 0;
+	}
+	
+	.load-leave-active {
+		transition: opacity .5s;
 	}
 	
 	.navbar {
@@ -311,7 +389,7 @@
 			justify-content: center;
 			align-items: center;
 			height: 400px;
-			padding: 100px 15px 80px;
+			padding: 80px 15px 90px;
 			h1 {
 				writing-mode: vertical-rl;
 				font-size: 50px;
@@ -325,15 +403,15 @@
 		.wisdom{
 			position: absolute;
 			opacity: 0;
-			left: 70px;
-			bottom: 30px;
-			max-height: 250px;
+			left: 20px;
+			bottom: 20px;
+			max-height: 200px;
 			writing-mode: vertical-rl;
 		    letter-spacing: 2px;
 			color: #fff;
 			font-size: 16px;
 			&.active {
-				opacity: 1;
+				opacity: .6;
 				transition: opacity 2s 1s;
 			}
 		}
@@ -381,6 +459,43 @@
 		margin-right: auto;
 		margin-left: auto;
 		position: relative;
+	}
+	
+	footer {
+		margin: 20px 0 30px;
+		&.out {
+			position: fixed;
+			top: 100%;
+		}
+	}
+	
+	.links {
+		    padding-bottom: 20px;
+    		border-bottom: 1px solid #eee;
+		h5 {
+			margin-bottom: 10px;
+		}
+		ul {
+			display: flex;
+		}
+		li {
+			padding: 0 7px;
+			a {
+				color: #bfbfbf;
+				&:hover {
+					color: #0085a1;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+	
+	.copy {
+		margin-top: 30px;
+		text-align: center;
+		a {
+			color: #000;
+		}
 	}
 	
 	.switch-enter {
@@ -479,9 +594,9 @@
 				}
 			}
 			.wisdom {
-				left: 25px;
+				left: 15px;
 				bottom: 10px;
-				height: 170px;
+				max-height: 150px;
 				font-size: 14px;
 			}
 		}

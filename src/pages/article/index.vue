@@ -1,7 +1,12 @@
 <template>
 	<div class="article">
 		<h2 class="title">{{title}}</h2>
+		<h5 class="describe">{{describe}}</h5>
 		<div class="content" v-html="html"></div>
+		<video controls v-if="video">
+			<source :src="videoSrc" type="video/mp4">
+			浏覽器不支持 video
+		</video>
 	</div>
 </template>
 
@@ -13,7 +18,10 @@
 		data: () => {
 			return {
 				title: '',
-				html: ''
+				describe: '',
+				html: '',
+				video: false,
+				videoSrc: ''
 			}
 		},
 		mounted() {
@@ -25,7 +33,12 @@
 				type
 			}, data => {
 				_this.title = data.title;
+				_this.describe = data.describe;
 				_this.html = markdown.toHTML(data.content);
+				if(data.video) {
+					_this.video = true;
+					_this.videoSrc = '../../static/' + data.video;
+				}
 			});
 		}
 	}
@@ -33,13 +46,25 @@
 
 <style lang="less">
 	.article {
-		.title {
-			margin-bottom: 15px;
-			text-align: center;
-		}
+		padding-bottom: 20px;
+		border-bottom: 1px solid #eee;
 		font-size: 13px;
 		line-height: 18px;
 		color: #737373;
+		.title,
+		.describe {
+			text-align: center;
+		}
+		.describe {
+			font-style: italic;
+			color: #a3a3a3;
+		}
+		video {
+			display: block;
+			width: 100%;
+			margin: 20px auto 0;
+			max-width: 665px;
+		}
 		a {
 			color: #0069d6;
 		}

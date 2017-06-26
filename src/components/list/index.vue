@@ -37,6 +37,10 @@
 		padding-bottom: 5px;
 		border-bottom: 1px solid #eee;
 		margin-bottom: 10px;
+		&:first-of-type {
+			padding-top: 5px;
+			border-top: 1px solid #eee;
+		}
 		.title {
 			color: #404040;
 		}
