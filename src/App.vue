@@ -69,7 +69,7 @@
 			</h1>
 		</header>
 		<div class="audio-container clearfix">
-			<audio-player ref="audio" :data="songList" :random="true" class="rf"></audio-player>
+			<audio-player v-if="loadComplete" ref="audio" :data="songList" :random="true" class="rf"></audio-player>
 		</div>
 		<div class="container">
 			<transition name="switch" 
@@ -197,7 +197,7 @@
 					_this.wisdomStatus = true;
 				}, 200);
 				_this.loadComplete = true;
-				_this.$refs.audio.$refs.player.play();
+//				_this.$refs.audio.$refs.player.play();
 			});
 		}
 	}
