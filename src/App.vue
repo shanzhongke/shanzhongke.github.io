@@ -42,12 +42,12 @@
 							<li>
 								<router-link to="/martial">拳技</router-link>
 							</li>
-							<li>
+							<!--<li>
 								<router-link to="/">中醫</router-link>
-							</li>
-							<li>
+							</li>-->
+							<!--<li>
 								<router-link to="/">書單</router-link>
-							</li>
+							</li>-->
 						</ul>
 					</div>
 				</div>
@@ -96,7 +96,7 @@
                     		v-if="loadComplete"
 						    style="margin-left: 2px; margin-bottom:-5px;"
 						    frameborder="0" scrolling="0" width="91px" height="20px"
-						    src="https://ghbtns.com/github-btn.html?user=shanzhongke&repo=toby20130333.github.io&type=star&count=true" >
+						    src="https://ghbtns.com/github-btn.html?user=shanzhongke&repo=shanzhongke.github.io&type=star&count=true" >
 						</iframe>
 					</p>
 				</div>
@@ -110,6 +110,8 @@
 	import audioList from './const/audioList'
 	import wisdoms from './const/wisdom'
 	import audioPlayer from './components/audioPlayer';
+	import attachFastClick from "fastclick";
+	new attachFastClick(document.body);
 	
 	export default {
 		name: 'app',
@@ -584,7 +586,7 @@
 		.header {
 			.content {
 				height: 250px;
-				padding: 60px 15px 40px;
+				padding: 60px 15px 0px;
 				h1 {
 					font-size: 36px;
 					line-height: 50px;
