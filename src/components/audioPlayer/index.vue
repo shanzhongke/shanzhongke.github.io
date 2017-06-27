@@ -1,6 +1,6 @@
 <template>
 	<div class="audio">
-		<audio ref="player" :src="src" @ended="ended" preload="auto" :autoplay="auto">
+		<audio ref="player" :src="src" @ended="ended" :autoplay="auto">
 		</audio>
 		<i class="iconfont icon-play" v-if="status == 'pause'" @click="play"></i>
 		<i class="iconfont icon-pause" v-if="status == 'play'" @click="pause"></i>
