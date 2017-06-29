@@ -68,17 +68,17 @@
 				{{wisdomName}}
 			</h1>
 		</header>
-		<div class="audio-container clearfix">
-			<audio-player 
-				v-if="loadComplete" 
-				ref="audio" 
-				:data="songList" 
-				:random="true" 
-				class="rf"
-			>
-			</audio-player>
-		</div>
 		<div class="container">
+			<div class="audio-container clearfix">
+				<audio-player 
+					v-if="loadComplete" 
+					ref="audio" 
+					:data="songList" 
+					:random="true" 
+					class="rf"
+				>
+				</audio-player>
+			</div>
 			<transition name="switch" 
 				v-on:before-leave="pageSwitch = true;"
 				v-on:after-enter="pageSwitch = false;"
@@ -89,10 +89,9 @@
 				<div class="links">
 					<h5>推薦站點</h5>
 					<ul>
-						<li><a href="https://shuge.org/" target="_blank">書格</a></li>
-						<li><a href="http://www.icourse163.org/" target="_blank">中國大學(慕課)</a></li>
-						<li><a href="http://zh.daoinfo.org/" target="_blank">道教百科</a></li>
-						<li><a href="http://www.qiuchuji.org/" target="_blank">邱祖百科</a></li>
+						<li v-for="item in links">
+							<a :href="item.url" target="_blank">{{item.name}}</a>
+						</li>
 					</ul>
 				</div>
 				<div class="copy">
@@ -141,6 +140,13 @@
 					wander: ['雲', '游', '篇'],
 					martial: ['拳', '技', '篇']
 				},
+				links: [
+					{name: '書格', url: 'https://shuge.org/'},
+					{name: '中國大學(慕課)', url: 'http://www.icourse163.org/'},
+					{name: '道教百科', url: 'http://zh.daoinfo.org/'},
+					{name: '邱祖百科', url: 'http://www.qiuchuji.org/'},
+					{name: '中華珍寶館', url: 'http://www.ltfc.net/'}
+				],
 				wisdomStatus: false,
 				pageSwitch: false //页面是否切换
 			}
@@ -461,8 +467,7 @@
 	}
 	
 	.audio-container {
-		padding-right: 10px;
-		margin-bottom: 10px;
+		margin-bottom: 15px;
 	}
 	
 	.container {
@@ -518,7 +523,7 @@
 	}
 	.switch-enter-active{
 		position: absolute;
-		top: 0;
+		top: 42px;
 		left: 15px;
 		right: 15px;
 	}
@@ -596,7 +601,7 @@
 		.header {
 			.content {
 				height: 250px;
-				padding: 60px 15px 0px;
+				padding: 60px 15px 40px;
 				h1 {
 					font-size: 36px;
 					line-height: 50px;

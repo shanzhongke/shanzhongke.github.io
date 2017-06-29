@@ -103,6 +103,7 @@
 			height: 100%;
 			width: 100%;
 			position: absolute;
+			z-index: 99;
 			display: flex;
 			align-items: center;
 			justify-content: center;
