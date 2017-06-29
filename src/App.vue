@@ -69,14 +69,21 @@
 			</h1>
 		</header>
 		<div class="audio-container clearfix">
-			<audio-player v-if="loadComplete" ref="audio" :data="songList" :random="true" class="rf"></audio-player>
+			<audio-player 
+				v-if="loadComplete" 
+				ref="audio" 
+				:data="songList" 
+				:random="true" 
+				class="rf"
+			>
+			</audio-player>
 		</div>
 		<div class="container">
 			<transition name="switch" 
 				v-on:before-leave="pageSwitch = true;"
 				v-on:after-enter="pageSwitch = false;"
 			>
-				<router-view></router-view>
+				<router-view @video="videoPlay"></router-view>
 			</transition>
 			<footer :class="{out: pageSwitch}">
 				<div class="links">
@@ -173,6 +180,9 @@
 			}
 		},
 		methods: {
+			videoPlay() {
+				this.$refs.audio.$refs.player.pause();
+			},
 			click() {
 				function launchFullscreen(element) {
 					if(element.requestFullscreen) {
@@ -199,7 +209,6 @@
 					_this.wisdomStatus = true;
 				}, 200);
 				_this.loadComplete = true;
-//				_this.$refs.audio.$refs.player.play();
 			});
 		}
 	}
@@ -208,7 +217,7 @@
 <style lang="less">
 	@font-face {
 		font-family: mingTi;
-		src: url('/static/fonts/WenYue-GuDianMingChaoTi-NC-W5.otf')
+		src: url('/static/fonts/WenYue-GuDianMingChaoTi-NC-W5.ttf')
 	}
 	
 	#app {
@@ -257,9 +266,10 @@
 		.row:nth-of-type(2) {
 		  	justify-content: space-between;
 		}
-		.circle{animation: loading 2s linear infinite;
+		.circle{
 			width: 60px;
 			height: 60px;
+			animation: loading 2s linear infinite;
 			background: url(assets/img/loading.png) center no-repeat;
 			background-size: 100%;
 		}

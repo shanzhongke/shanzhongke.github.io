@@ -3,7 +3,7 @@
 		<h2 class="title">{{title}}</h2>
 		<h5 class="describe">{{describe}}</h5>
 		<div class="content" v-html="html"></div>
-		<video controls v-if="video">
+		<video controls v-if="video" @play="play">
 			<source :src="videoSrc" type="video/mp4">
 			浏覽器不支持 video
 		</video>
@@ -22,6 +22,11 @@
 				html: '',
 				video: false,
 				videoSrc: ''
+			}
+		},
+		methods: {
+			play() {
+				this.$emit('video');
 			}
 		},
 		mounted() {

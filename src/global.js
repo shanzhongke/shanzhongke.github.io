@@ -32,19 +32,19 @@ const URLS = {
 	getPreviewList: ['/api/getPreviewList', 'get'],
 	//获取指定數量的最新文章
 	//request:{num} 文章數量
-	//response:[{id,title,describe,time,type}]
+	//response:{code,data:[{id,title,describe,time,type}]}
 	getWanderList: ['/api/getWanderList', 'get'],
 	//获取雲游類文章列表 按時間排序
 	//request:{}
-	//response:[{id,title,describe,time}]
+	//response:{code,data:[{id,title,describe,time}]}
 	getMartialList: ['/api/getMartialList', 'get'],
 	//获取拳技類文章列表 按時間排序
 	//request:{}
-	//response:[{id,title,describe,time}]
+	//response:{code,data:[{id,title,describe,time}]}
 	getArticle: ['/api/getArticle', 'get'],
 	//获取指定文章具體内容
 	//request:{id,type}
-	//response:[{id,title,content,describe,time}]
+	//response:{code,data:[{id,title,content,describe,time}]}
 };
 
 export default GlobalCaller
