@@ -16,8 +16,7 @@ module.exports = {
 		path: config.build.assetsRoot,
 		filename: '[name].js',
 		publicPath: process.env.NODE_ENV === 'production' ?
-			config.build.assetsPublicPath :
-			config.dev.assetsPublicPath
+			config.build.assetsPublicPath : config.dev.assetsPublicPath
 	},
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
@@ -27,7 +26,8 @@ module.exports = {
 		}
 	},
 	module: {
-		rules: [{
+		rules: [
+			{
 				test: /\.(js|vue)$/,
 				loader: 'eslint-loader',
 				enforce: "pre",
@@ -63,13 +63,11 @@ module.exports = {
 				}
 			},
 			{
-                test: /\.md$/,
-                use: [
-                    {
-                        loader: "html-loader"
-                    }
-                ]
-            }
+				test: /\.md$/,
+				use: [{
+					loader: "html-loader"
+				}]
+			}
 		]
 	},
 	plugins: [
@@ -79,4 +77,6 @@ module.exports = {
 			$: "jquery"
 		})
 	]
-}
+};
+
+
