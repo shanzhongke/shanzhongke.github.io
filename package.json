@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "fastclick": "^1.0.6",
     "jquery": "^2.2.3",
     "less": "^2.7.2",
     "less-loader": "^3.0.0",
