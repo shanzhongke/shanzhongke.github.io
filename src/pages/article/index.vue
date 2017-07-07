@@ -64,11 +64,18 @@
 			font-style: italic;
 			color: #a3a3a3;
 		}
+		p {
+			margin-bottom: 10px;
+		}
 		video {
 			display: block;
 			width: 100%;
 			margin: 20px auto 0;
 			max-width: 665px;
+		}
+		img {
+			display: block;
+			margin: 0 auto;
 		}
 		a {
 			color: #0069d6;
@@ -90,6 +97,7 @@
 			font-size: 30px;
 		}
 		h2 {
+			margin: 10px 0 5px;
 			font-size: 24px;
 		}
 		h3 {
@@ -112,7 +120,6 @@
 		blockquote {
 			padding: 13px 13px 21px 15px;
 			margin-bottom: 18px;
-			font-family: georgia, serif;
 			font-style: italic;
 		}
 		blockquote:before {
