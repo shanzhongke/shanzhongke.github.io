@@ -42,7 +42,7 @@
 				_this.html = markdown.toHTML(data.content);
 				if(data.video) {
 					_this.video = true;
-					_this.videoSrc = '../../static/' + data.video;
+					_this.videoSrc = '../../static/video/' + data.video;
 				}
 			});
 		}
@@ -75,7 +75,9 @@
 		}
 		img {
 			display: block;
-			margin: 0 auto;
+			/*margin: 0 auto;*/
+			width: 100%;
+			max-width: 680px;
 		}
 		a {
 			color: #0069d6;

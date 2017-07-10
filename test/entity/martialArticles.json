@@ -1,38 +1,18 @@
 {
 	"000": {
 		"id": "000",
-		"title": "三皇炮捶拳之大槍基本功",
+		"title": "三皇炮捶拳之抖大杆子",
 		"describe": "抖大槍",
-		"time": "2017/6/23",
-		"video": "movie.mp4",
+		"time": "2017/7/10",
+		"video": "doudagan.mp4",
 		"type": "martial"
 	},
 	"001": {
 		"id": "001",
-		"title": "三皇炮捶拳之十八槍",
-		"describe": "十八槍",
-		"time": "2017/6/24",
-		"type": "martial"
-	},
-	"002": {
-		"id": "002",
 		"title": "八極拳之小架一趟",
 		"describe": "小架一趟",
-		"time": "2017/6/25",
-		"type": "martial"
-	},
-	"003": {
-		"id": "003",
-		"title": "八極拳之小聯手",
-		"describe": "小聯手",
-		"time": "2017/6/26",
-		"type": "martial"
-	},
-	"004": {
-		"id": "004",
-		"title": "八極拳之小架二趟",
-		"describe": "小架二趟",
-		"time": "2017/6/27",
+		"time": "2017/7/9",
+		"video": "yitang.mp4",
 		"type": "martial"
 	}
 }
